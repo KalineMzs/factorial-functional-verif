@@ -20,8 +20,8 @@ class factorial_env extends uvm_env;
 
     virtual function void connect_phase (uvm_phase phase);
         super.connect_phase(phase);
-        in_agt.agt_in_port.connect(refmod.refmod_in_port);
-        refmod.refmod_out_port.connect(scoreboard.refmod_port);
-        out_agt.agt_out_port.connect(scoreboard.dut_port);
+        in_agt.agt_in_port.connect(refmod.refmod_in_port.analysis_export);
+        refmod.refmod_out_port.connect(scoreboard.refmod_port.analysis_export);
+        out_agt.agt_out_port.connect(scoreboard.dut_port.analysis_export);
     endfunction
 endclass

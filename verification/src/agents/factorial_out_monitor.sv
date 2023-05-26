@@ -14,7 +14,7 @@ class factorial_out_monitor extends uvm_monitor;
     virtual function void build_phase (uvm_phase phase);
         super.build_phase(phase);
         assert(uvm_config_db#(factorial_vif)::get(this, "", "vif", vif));
-        out_tr = factorial_seq_item#(IN_DATA_WD, OUT_DATA_WD)::type_ide::create("out_tr", this);
+        out_tr = factorial_seq_item#(IN_DATA_WD, OUT_DATA_WD)::type_id::create("out_tr", this);
     endfunction
 
     virtual task main_phase (uvm_phase phase);
