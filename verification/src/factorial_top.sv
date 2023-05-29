@@ -4,7 +4,7 @@
 `include "agents/factorial_interface.sv"
 `include "factorial_top_pkg.sv"
 
-module yarvi_top;
+module factorial_top;
     import uvm_pkg::*;
     import factorial_tb_cfg_pkg::*;
     import factorial_top_pkg::*;
