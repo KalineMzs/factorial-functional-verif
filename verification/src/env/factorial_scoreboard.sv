@@ -2,7 +2,8 @@ class factorial_scoreboard extends uvm_scoreboard;
     `uvm_component_utils (factorial_scoreboard)
 
     parameter SHOW_MAX = 1000;
-    uvm_tlm_analysis_fifo #(factorial_seq_item #(IN_DATA_WD, OUT_DATA_WD)) dut_port, refmod_port;
+    uvm_tlm_fifo #(factorial_seq_item #(IN_DATA_WD, OUT_DATA_WD)) refmod_port;
+    uvm_tlm_analysis_fifo #(factorial_seq_item #(IN_DATA_WD, OUT_DATA_WD)) dut_port;
 
     factorial_seq_item #(IN_DATA_WD, OUT_DATA_WD) dut_tr, refmod_tr;
 

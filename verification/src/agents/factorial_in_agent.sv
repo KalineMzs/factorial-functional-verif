@@ -5,7 +5,7 @@ class factorial_in_agent extends uvm_agent;
     factorial_driver drv;
     factorial_in_monitor in_mon;
     
-    uvm_analysis_port #(factorial_seq_item #(IN_DATA_WD, OUT_DATA_WD)) agt_in_port;
+    uvm_tlm_analysis_fifo #(factorial_seq_item #(IN_DATA_WD, OUT_DATA_WD)) agt_in_port;
     
     function new(string name = "factorial_in_agent", uvm_component parent = null);
         super.new(name, parent);
@@ -22,6 +22,6 @@ class factorial_in_agent extends uvm_agent;
     virtual function void connect_phase(uvm_phase phase);
         super.connect_phase(phase);
         drv.seq_item_port.connect(sqr.seq_item_export);
-        in_mon.mon_in_port.connect(agt_in_port);
+        in_mon.mon_in_port.connect(agt_in_port.analysis_export);
     endfunction
 endclass

@@ -1,10 +1,10 @@
 class factorial_seq_item #(int IN_DATA_WD = 4, OUT_DATA_WD = 46) extends uvm_sequence_item;
     
-    rand bit [IN_DATA_WD-1:0] in_data;
-    rand bit in_valid;
-    rand bit [OUT_DATA_WD-1:0] out_data;
-    rand bit out_valid;
-    rand bit out_busy;
+    rand logic [IN_DATA_WD-1:0] in_data;
+    rand logic in_valid;
+    rand logic [OUT_DATA_WD-1:0] out_data;
+    rand logic out_valid;
+    rand logic out_busy;
 
     constraint in_valid_generation {in_valid dist {1:=80, 0:=20}; }
 

@@ -21,9 +21,9 @@ class factorial_env extends uvm_env;
     virtual function void connect_phase (uvm_phase phase);
         super.connect_phase(phase);
 //        in_agt.agt_in_port.connect(refmod.refmod_in_port.analysis_export);
-		uvmc_tlm1 #(logic)::connect(in_agt.agt_in_port, "foo");
+		uvmc_tlm1 #(factorial_seq_item#(IN_DATA_WD, OUT_DATA_WD))::connect(in_agt.agt_in_port.get_export, "foo");
 //        refmod.refmod_out_port.connect(scoreboard.refmod_port.analysis_export);
-		uvmc_tlm1 #(factorial_seq_item#(IN_DATA_WD, OUT_DATA_WD))::connect(scoreboard.refmod_port.analysis_export, "bar");
+		uvmc_tlm1 #(factorial_seq_item#(IN_DATA_WD, OUT_DATA_WD))::connect(scoreboard.refmod_port.put_export, "bar");
         out_agt.agt_out_port.connect(scoreboard.dut_port.analysis_export);
     endfunction
 endclass

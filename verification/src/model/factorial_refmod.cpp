@@ -15,28 +15,23 @@ struct tr {
 
 #include "uvmc.h"
 using namespace uvmc;
-UVMC_UTILS_5(tr, in_data, in_data, out_valid, out_valid, out_busy)
+UVMC_UTILS_5(tr, in_data, in_valid, out_data, out_valid, out_busy)
 
 SC_MODULE(factorial_refmod) {
   sc_port<tlm_get_peek_if<tr> > in;
   sc_port<tlm_put_if<tr> > out;
 
   SC_CTOR(factorial_refmod): in("in"), out("out") {
-		SC_THREAD(p);
-		cout << "to tentando \n";
-      uvmc_connect(in, "foo");
-      uvmc_connect(out, "bar");
-	}
+	SC_THREAD(p);
+}
 
   void p() {
     
-    tr tr;
+    tr tr_in, tr_out;
     while(1){
-      tr = in->get();
-      cout <<"refmod out_data: " <<tr.out_data <<"\n";
-      cout <<"refmod out_valid: " <<tr.out_valid <<"\n";
-      cout <<"refmod out_busy: " <<tr.out_busy <<"\n";
-      out->put(tr);
+      tr_in = in->get();
+		tr_out = tr_in;
+      out->put(tr_out);
     }
   }
 };
