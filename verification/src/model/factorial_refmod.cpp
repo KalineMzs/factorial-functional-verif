@@ -8,10 +8,10 @@ using namespace tlm;
 
 struct tr {
 	int in_data;
-	sc_bit in_valid;
+	bool in_valid;
 	int out_data;
-	sc_bit out_valid;
-	sc_bit out_busy;
+	bool out_valid;
+	bool out_busy;
 };
 
 #include "uvmc.h"
@@ -22,50 +22,47 @@ SC_MODULE(factorial_refmod) {
   sc_port<tlm_get_peek_if<tr> > in;
   sc_port<tlm_put_if<tr> > out;
 
-	sc_signal<bool> clk_signal;
-	sc_signal<bool> resetn_signal;
-	sc_signal<int> in_data_signal;
-	sc_signal<bool> in_valid_signal;
+	sc_signal<bool> clk_sig;
+	sc_signal<bool> resetn_sig;
+	sc_signal<int> in_data_sig;
+	sc_signal<bool> in_valid_sig;
 
-	sc_signal<int> out_data_signal;
-	sc_signal<bool> out_valid_signal;
-	sc_signal<bool> out_busy_signal;
+	sc_signal<int> out_data_sig;
+	sc_signal<bool> out_valid_sig;
+	sc_signal<bool> out_busy_sig;
 
- factorial_cpp child_factorial;
+	factorial_cpp factorial;
 
-  SC_CTOR(factorial_refmod): in("in"), out("out"), child_factorial("child_factorial") {
-	child_factorial.clk(clk_signal);
-	child_factorial.resetn(resetn_signal);
-	child_factorial.in_data(in_data_signal);
-	child_factorial.in_valid(in_valid_signal);
+  SC_CTOR(factorial_refmod): in("in"), out("out"), factorial("factorial") {
+		factorial.clk(clk_sig);
+		factorial.resetn(resetn_sig);
+		factorial.in_data(in_data_sig);
+		factorial.in_valid(in_valid_sig);
 
-	child_factorial.out_data(out_data_signal);
-	child_factorial.out_valid(out_valid_signal);
-	child_factorial.out_busy(out_busy_signal);
-
-	SC_THREAD(p);
-}
+		factorial.out_data(out_data_sig);
+		factorial.out_valid(out_valid_sig);
+		factorial.out_busy(out_busy_sig);
+		
+		SC_THREAD(p);
+	}
 
   void p() {
     
     tr tr_in, tr_out;
 
     while(1){
-		tr_in = in->get();
-		clk_signal = 1;
-		resetn_signal = 1;
-		in_data_signal = tr_in.in_data;
-		in_valid_signal = tr_in.in_valid;
+			clk_sig = 0;
+			tr_in = in->get();
 
-		child_factorial.factorial_proc();
+			in_valid_sig = 1;
+			in_data_sig = tr_in.in_data;
+			clk_sig = 1;
 
-		tr_out.out_data = out_data_signal.read();
-		tr_out.out_valid = out_valid_signal.read();
-		tr_out.out_busy = out_busy_signal.read();
+			tr_out.out_valid = out_valid_sig.read();
+			tr_out.out_busy = out_busy_sig.read();
+			tr_out.out_data = static_cast<unsigned int>(out_data_sig.read());
 
-		out->put(tr_out);
-
-		clk_signal = 0;
+			out->put(tr_out);
     }
   }
 };
