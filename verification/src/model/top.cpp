@@ -1,4 +1,5 @@
 #include "factorial_refmod.cpp"
+#include "factorial_cpp.hpp"
 
 int sc_main(int argc, char* argv[]) {
  
