@@ -6,10 +6,13 @@
 
 module factorial_top;
     import uvm_pkg::*;
+	import uvmc_pkg::*;
     import factorial_tb_cfg_pkg::*;
     import factorial_top_pkg::*;
 
     logic clk, resetn;
+
+	initial uvmc_init();
 
     initial begin
         clk = 'b0;

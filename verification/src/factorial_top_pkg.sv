@@ -1,5 +1,6 @@
 package factorial_top_pkg;
     import uvm_pkg::*;
+    import uvmc_pkg::*;
 
     import factorial_tb_cfg_pkg::*;
     `include "agents/factorial_seq_item.sv"
