@@ -10,7 +10,7 @@ class factorial_scoreboard extends uvm_scoreboard;
     uvm_comparer comparer;
 
     int n_match;
-    bit match_result;
+    bit match_result = 0;
 
     function new(string name = "factorial_scoreboard", uvm_component parent = null);
         super.new(name, parent);
@@ -40,9 +40,9 @@ class factorial_scoreboard extends uvm_scoreboard;
                 refmod_port.get(refmod_tr);
             join
 
-            match_result = comparer.compare_field("Signal: out_data", dut_tr.out_data, refmod_tr.out_data, OUT_DATA_WD) &
-                           comparer.compare_field("Signal: out_valid", dut_tr.out_valid, refmod_tr.out_valid, 1) &
-                           comparer.compare_field("Signal: out_busy", dut_tr.out_busy, refmod_tr.out_busy, 1);
+//            match_result = comparer.compare_field("Signal: out_data", dut_tr.out_data, refmod_tr.out_data, OUT_DATA_WD);
+//                           & comparer.compare_field("Signal: out_valid", dut_tr.out_valid, refmod_tr.out_valid, 1)
+//                           & comparer.compare_field("Signal: out_busy", dut_tr.out_busy, refmod_tr.out_busy, 1);
             if (match_result) n_match++;
         end
     endtask

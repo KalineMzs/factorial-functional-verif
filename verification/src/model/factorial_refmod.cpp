@@ -6,10 +6,11 @@ using namespace std;
 
 using namespace tlm;
 
-struct tr {
-	int in_data;
+class tr {
+public:
+	sc_uint<3> in_data;
 	bool in_valid;
-	int out_data;
+	sc_uint<16> out_data;
 	bool out_valid;
 	bool out_busy;
 };
@@ -50,19 +51,33 @@ SC_MODULE(factorial_refmod) {
     
     tr tr_in, tr_out;
 
-    while(1){
 			clk_sig = 0;
-			tr_in = in->get();
+    while(1){
+//			cout << " \n antes: tr_in.in_valid: " << tr_in.in_valid << " data: " << tr_in.in_data << "\n";
+			in->get(tr_in);
+			cout << " dps de get tr_in.in_valid: " << tr_in.in_valid << " data: " << tr_in.in_data << "\n";
+			resetn_sig = 1;
+			//cout << " dps de reset tr_in.in_valid: " << tr_in.in_valid << "\n";
 
-			in_valid_sig = 1;
 			in_data_sig = tr_in.in_data;
+			//cout << " dps de in_data tr_in.in_valid: " << tr_in.in_valid << "\n";
+			in_valid_sig = tr_in.in_valid;
+			//cout << " dps de in_valid tr_in.in_valid: " << tr_in.in_valid << "\n";
 			clk_sig = 1;
+			//cout << " dps de clk tr_in.in_valid: " << tr_in.in_valid << "\n";
 
-			tr_out.out_valid = out_valid_sig.read();
-			tr_out.out_busy = out_busy_sig.read();
-			tr_out.out_data = static_cast<unsigned int>(out_data_sig.read());
-
+//			tr_out.in_valid = tr_in.in_valid;
+			//cout << " dps de tr_out.in_valid tr_in.in_valid: " << tr_in.in_valid << "\n";
+//			tr_out.out_valid = out_valid_sig.read();
+			//cout << " dps de tr_out.out_valid tr_in.in_valid: " << tr_in.in_valid << "\n";
+//			tr_out.out_busy = out_busy_sig.read();
+			//cout << " dps de tr_out.out_busy tr_in.in_valid: " << tr_in.in_valid << "\n";
+//			tr_out.out_data = static_cast<unsigned int>(out_data_sig.read());
+			//cout << " dps de tr_out.out_data tr_in.in_valid: " << tr_in.in_valid << "\n";
+//			if(tr_out.out_data != 0) cout << "tr_out.out_data: " << tr_out.out_data << "\n";
+			//cout << " dps de if(tr_out.out_data) tr_in.in_valid: " << tr_in.in_valid << "\n";
 			out->put(tr_out);
+			//cout << " dps de put(tr_out) tr_in.in_valid: " << tr_in.in_valid << "\n";
     }
   }
 };
