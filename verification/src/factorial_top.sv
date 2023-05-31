@@ -6,10 +6,13 @@
 
 module factorial_top;
     import uvm_pkg::*;
+	import uvmc_pkg::*;
     import factorial_tb_cfg_pkg::*;
     import factorial_top_pkg::*;
 
     logic clk, resetn;
+
+	initial uvmc_init();
 
     initial begin
         clk = 'b0;
@@ -24,7 +27,7 @@ module factorial_top;
         .resetn(resetn)
     );
 
-    FactorialBlk dut (
+    FactorialBlk #(IN_DATA_WD, OUT_DATA_WD) dut (
         .clk(clk),
         .resetn(resetn),
         .in_data(factorial_if.dut.in_data),

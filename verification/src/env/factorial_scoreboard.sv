@@ -2,14 +2,15 @@ class factorial_scoreboard extends uvm_scoreboard;
     `uvm_component_utils (factorial_scoreboard)
 
     parameter SHOW_MAX = 1000;
-    uvm_tlm_analysis_fifo #(factorial_seq_item #(IN_DATA_WD, OUT_DATA_WD)) dut_port, refmod_port;
+    uvm_tlm_fifo #(factorial_seq_item #(IN_DATA_WD, OUT_DATA_WD)) refmod_port;
+    uvm_tlm_analysis_fifo #(factorial_seq_item #(IN_DATA_WD, OUT_DATA_WD)) dut_port;
 
     factorial_seq_item #(IN_DATA_WD, OUT_DATA_WD) dut_tr, refmod_tr;
 
     uvm_comparer comparer;
 
     int n_match;
-    bit match_result;
+    bit match_result = 0;
 
     function new(string name = "factorial_scoreboard", uvm_component parent = null);
         super.new(name, parent);
@@ -37,11 +38,11 @@ class factorial_scoreboard extends uvm_scoreboard;
             fork
                 dut_port.get(dut_tr);
                 refmod_port.get(refmod_tr);
-            join
-
-            match_result = comparer.compare_field("Signal: out_data", dut_tr.out_data, refmod_tr.out_data, OUT_DATA_WD) &
-                           comparer.compare_field("Signal: out_valid", dut_tr.out_valid, refmod_tr.out_valid, 1) &
-                           comparer.compare_field("Signal: out_busy", dut_tr.out_busy, refmod_tr.out_busy, 1);
+            join			
+			match_result = comparer.compare_field("Signal: out_data",
+												   dut_tr.out_data, refmod_tr.out_data[OUT_DATA_WD-1:2], OUT_DATA_WD, UVM_DEC);
+			match_result &= comparer.compare_field("Signal: out_valid", dut_tr.out_valid, refmod_tr.out_data[1], 1);
+			match_result &= comparer.compare_field("Signal: out_busy", dut_tr.out_busy, refmod_tr.out_busy, 1);
             if (match_result) n_match++;
         end
     endtask

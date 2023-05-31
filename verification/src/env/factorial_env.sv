@@ -7,7 +7,7 @@ class factorial_env extends uvm_env;
     factorial_refmod refmod;
 
     function new(string name = "factorial_env", uvm_component parent = null);
-        super.new(name, parent);        
+        super.new(name, parent);
     endfunction
 
     virtual function void build_phase(uvm_phase phase);
@@ -20,8 +20,10 @@ class factorial_env extends uvm_env;
 
     virtual function void connect_phase (uvm_phase phase);
         super.connect_phase(phase);
-        in_agt.agt_in_port.connect(refmod.refmod_in_port.analysis_export);
-        refmod.refmod_out_port.connect(scoreboard.refmod_port.analysis_export);
+//        in_agt.agt_in_port.connect(refmod.refmod_in_port.analysis_export);
+		uvmc_tlm1 #(factorial_seq_item#(IN_DATA_WD, OUT_DATA_WD))::connect(in_agt.agt_in_port.get_export, "foo");
+//        refmod.refmod_out_port.connect(scoreboard.refmod_port.analysis_export);
+		uvmc_tlm1 #(factorial_seq_item#(IN_DATA_WD, OUT_DATA_WD))::connect(scoreboard.refmod_port.put_export, "bar");
         out_agt.agt_out_port.connect(scoreboard.dut_port.analysis_export);
     endfunction
 endclass
