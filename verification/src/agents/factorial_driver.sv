@@ -20,14 +20,12 @@ class factorial_driver extends uvm_driver #(factorial_seq_item #(IN_DATA_WD, OUT
             seq_item_port.get_next_item(in_tr);
             @(posedge vif.clk);
             if (vif.resetn === 1'b1) begin
-				vif.in_valid = 'b1;
-		        vif.in_data = 'b111;
-//		        vif.in_valid = vif.in_data[0];
-//		        vif.in_data = vif.in_data[2:1];
+				vif.in_data = in_tr.in_data[2:1];
+				vif.in_valid = in_tr.in_data[0];
 			end
 			else begin
-				vif.in_valid = 'd1;
-		        vif.in_data = 'b0110; //6
+				vif.in_valid = 'h0;
+		        vif.in_data = 'hF;
 			end
             seq_item_port.item_done();
         end

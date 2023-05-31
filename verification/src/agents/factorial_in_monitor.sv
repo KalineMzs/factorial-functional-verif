@@ -20,10 +20,9 @@ class factorial_in_monitor extends uvm_monitor;
     virtual task main_phase (uvm_phase phase);
         forever begin
             @(posedge vif.clk);
-//            wait(vif.resetn === 1'b1);
+            wait(vif.resetn === 1'b1);
+			in_tr.in_data = {vif.in_data, vif.in_valid};
             in_tr.in_valid = vif.in_valid;
-			in_tr.in_data = vif.in_data;
-			`uvm_info("IN_MON", $sformatf("in_valid: %0d in_data=%0d", in_tr.in_valid, in_tr.in_data), UVM_LOW)
             mon_in_port.write(in_tr);
         end
     endtask

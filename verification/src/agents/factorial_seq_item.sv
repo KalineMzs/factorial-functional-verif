@@ -1,7 +1,7 @@
 class factorial_seq_item #(int IN_DATA_WD = 3, OUT_DATA_WD = 16) extends uvm_sequence_item;
 
-    rand bit [IN_DATA_WD-1:0] in_data;
     rand bit in_valid;
+    rand bit [IN_DATA_WD-1:0] in_data;
     rand bit [OUT_DATA_WD-1:0] out_data;
     rand bit out_valid;
     rand bit out_busy;
