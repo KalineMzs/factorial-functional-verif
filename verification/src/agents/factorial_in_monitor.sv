@@ -21,7 +21,7 @@ class factorial_in_monitor extends uvm_monitor;
         forever begin
             @(posedge vif.clk);
             wait(vif.resetn === 1'b1);
-			in_tr.in_data = {vif.in_data, vif.in_valid};
+			in_tr.in_data = vif.in_data;
             in_tr.in_valid = vif.in_valid;
             mon_in_port.write(in_tr);
         end
