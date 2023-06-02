@@ -1,7 +1,8 @@
 interface factorial_interface
 #( parameter IN_DATA_WD = 3,
              OUT_DATA_WD = 16
-)(input clk, resetn);
+)(input clk);
+    logic resetn;
     logic [IN_DATA_WD-1:0] in_data;
     logic in_valid;
     logic [OUT_DATA_WD-1:0] out_data;

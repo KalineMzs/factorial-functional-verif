@@ -11,6 +11,10 @@ package factorial_top_pkg;
     `include "agents/factorial_in_agent.sv"
     `include "agents/factorial_out_monitor.sv"
     `include "agents/factorial_out_agent.sv"
+    
+    //Reset
+    `include "agents/factorial_reset_driver.sv"
+    `include "agents/factorial_reset_agent.sv"
 
     `include "env/factorial_refmod.sv"
     `include "env/factorial_scoreboard.sv"

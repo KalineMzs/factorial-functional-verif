@@ -17,12 +17,12 @@ class factorial_in_monitor extends uvm_monitor;
         in_tr = factorial_seq_item#(IN_DATA_WD, OUT_DATA_WD)::type_id::create("in_tr", this);
     endfunction
 
-    virtual task main_phase (uvm_phase phase);
+    virtual task run_phase (uvm_phase phase);
         forever begin
             @(posedge vif.clk);
-            wait(vif.resetn === 1'b1);
-			in_tr.in_data = vif.in_data;
+            in_tr.in_data = vif.in_data;
             in_tr.in_valid = vif.in_valid;
+            in_tr.resetn = vif.resetn;
             mon_in_port.write(in_tr);
         end
     endtask

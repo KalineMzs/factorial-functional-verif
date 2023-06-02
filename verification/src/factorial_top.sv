@@ -1,3 +1,4 @@
+`timescale 1ns / 1ns
 `include "uvm_macros.svh"
 
 `include "factorial_tb_cfg_pkg.sv"
@@ -14,22 +15,17 @@ module factorial_top;
 
 	initial uvmc_init();
 
-    initial begin
-        clk = 'b0;
-        resetn = 'b0;
-        #10 resetn = 'b1;
-    end
+    initial clk = 'b0;
 
     always #5 clk = !clk;
 
     factorial_interface #(IN_DATA_WD, OUT_DATA_WD) factorial_if (
-        .clk(clk),
-        .resetn(resetn)
+        .clk(clk)
     );
 
     FactorialBlk #(IN_DATA_WD, OUT_DATA_WD) dut (
         .clk(clk),
-        .resetn(resetn),
+        .resetn(factorial_if.dut.resetn),
         .in_data(factorial_if.dut.in_data),
         .in_valid(factorial_if.dut.in_valid),
         .out_data(factorial_if.dut.out_data),

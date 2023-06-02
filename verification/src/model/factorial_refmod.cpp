@@ -13,6 +13,7 @@ public:
 	bool out_valid;
 	bool out_busy;
 	sc_uint<16> out_data;
+	bool resetn;
 };
 
 #include "uvmc.h"
@@ -21,11 +22,11 @@ using namespace uvmc;
 template <>
 struct uvmc_converter<tr> {
     static void do_pack (const tr &t, uvmc_packer &packer) {
-        packer << t.in_valid << t.in_data << t.out_valid << t.out_busy << t.out_data;
+        packer << t.in_valid << t.in_data << t.out_valid << t.out_busy << t.out_data << t.resetn;
     }
 
     static void do_unpack (tr &t, uvmc_packer &packer) {
-        packer >> t.in_valid >> t.in_data >> t.out_valid >> t.out_busy >> t.out_data;
+        packer >> t.in_valid >> t.in_data >> t.out_valid >> t.out_busy >> t.out_data >> t.resetn;
     }
 };
 // UVMC_UTILS_5(tr, in_valid, in_data, out_valid, out_busy, out_data)
@@ -65,10 +66,10 @@ SC_MODULE(factorial_refmod) {
         while(1){
             in->get(tr_in);
 
-            resetn_sig = 1;
+            resetn_sig = tr_in.resetn;
             in_data_sig = tr_in.in_data;
             in_valid_sig = tr_in.in_valid;
-
+            
             clk_sig = 1;
 
             tr_out.out_valid = out_valid_sig.read();

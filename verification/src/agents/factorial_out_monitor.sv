@@ -17,10 +17,9 @@ class factorial_out_monitor extends uvm_monitor;
         out_tr = factorial_seq_item#(IN_DATA_WD, OUT_DATA_WD)::type_id::create("out_tr", this);
     endfunction
 
-    virtual task main_phase (uvm_phase phase);
+    virtual task run_phase (uvm_phase phase);
         forever begin
             @(posedge vif.clk);
-            wait(vif.resetn === 1'b1);
             out_tr.out_data = vif.out_data;
             out_tr.out_valid = vif.out_valid;
             out_tr.out_busy = vif.out_busy;
