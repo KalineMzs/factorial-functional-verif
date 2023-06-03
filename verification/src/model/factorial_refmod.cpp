@@ -69,8 +69,9 @@ SC_MODULE(factorial_refmod) {
             resetn_sig = tr_in.resetn;
             in_data_sig = tr_in.in_data;
             in_valid_sig = tr_in.in_valid;
-            
+
             clk_sig = 1;
+            
 
             tr_out.out_valid = out_valid_sig.read();
             tr_out.out_busy = out_busy_sig.read();
@@ -78,6 +79,11 @@ SC_MODULE(factorial_refmod) {
 
             out->put(tr_out);
             clk_sig = 0;
+            
+            UVMC_INFO("SC_RFM", ("in_data: " + to_string(in_data_sig)
+                                 + " | in_valid: " + to_string(in_valid_sig)).c_str(), UVM_FULL, "");
+            UVMC_INFO("SC_RFM", ("out_data: " + to_string(tr_out.out_data)
+                                 + " | out_valid: " + to_string(out_valid_sig)).c_str(), UVM_FULL, "");
         }
     }
 };

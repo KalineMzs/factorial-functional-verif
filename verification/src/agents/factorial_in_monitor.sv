@@ -24,6 +24,8 @@ class factorial_in_monitor extends uvm_monitor;
             in_tr.in_valid = vif.in_valid;
             in_tr.resetn = vif.resetn;
             mon_in_port.write(in_tr);
+            `uvm_info("IN_MONITOR", $sformatf("in_tr.in_data: %0d | in_tr.in_valid: %0d",
+                                               in_tr.in_data, in_tr.in_valid), UVM_FULL)            
         end
     endtask
 endclass
