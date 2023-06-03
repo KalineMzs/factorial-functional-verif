@@ -5,6 +5,7 @@ class factorial_env extends uvm_env;
     factorial_out_agent out_agt;
     factorial_scoreboard scoreboard;
     factorial_refmod refmod;
+    factorial_coverage coverage;
 
     function new(string name = "factorial_env", uvm_component parent = null);
         super.new(name, parent);
@@ -16,6 +17,7 @@ class factorial_env extends uvm_env;
         out_agt = factorial_out_agent::type_id::create("out_agt", this);
         scoreboard = factorial_scoreboard::type_id::create("scoreboard", this);
         refmod = factorial_refmod::type_id::create("refmod", this);
+        coverage = factorial_coverage::type_id::create("coverage", this);
     endfunction
 
     virtual function void connect_phase (uvm_phase phase);
@@ -25,5 +27,6 @@ class factorial_env extends uvm_env;
 //        refmod.refmod_out_port.connect(scoreboard.refmod_port.analysis_export);
 		uvmc_tlm1 #(factorial_seq_item#(IN_DATA_WD, OUT_DATA_WD))::connect(scoreboard.refmod_port.put_export, "bar");
         out_agt.agt_out_port.connect(scoreboard.dut_port.analysis_export);
+        in_agt.agt_in_to_cov_port.connect(coverage.cov_port);
     endfunction
 endclass
