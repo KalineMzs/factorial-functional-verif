@@ -74,7 +74,7 @@ SC_MODULE(factorial_refmod) {
 
             tr_out.out_valid = out_valid_sig.read();
             tr_out.out_busy = out_busy_sig.read();
-            tr_out.out_data = static_cast<unsigned int>(out_data_sig.read());
+            tr_out.out_data = out_data_sig.read();
 
             out->put(tr_out);
             clk_sig = 0;
