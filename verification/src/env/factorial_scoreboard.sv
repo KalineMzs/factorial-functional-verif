@@ -23,7 +23,6 @@ class factorial_scoreboard extends uvm_scoreboard;
     virtual function void build_phase (uvm_phase phase);
         super.build_phase(phase);
         comparer.verbosity = UVM_LOW;
-        comparer.sev = UVM_ERROR;
         comparer.show_max = SHOW_MAX;
 		dut_tr = factorial_seq_item#(IN_DATA_WD, OUT_DATA_WD)::type_id::create("dut_tr", this);
 		refmod_tr = factorial_seq_item#(IN_DATA_WD, OUT_DATA_WD)::type_id::create("refmod_tr", this);
