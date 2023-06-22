@@ -1,16 +1,16 @@
 class factorial_in_agent extends uvm_agent;
     `uvm_component_utils(factorial_in_agent)
-    
+
     factorial_sequencer sqr;
     factorial_driver drv;
     factorial_in_monitor in_mon;
-    
+
     uvm_tlm_analysis_fifo #(factorial_seq_item #(IN_DATA_WD, OUT_DATA_WD)) agt_in_port;
     uvm_analysis_port #(factorial_seq_item #(IN_DATA_WD, OUT_DATA_WD)) agt_in_to_cov_port;
 
     function new(string name = "factorial_in_agent", uvm_component parent = null);
         super.new(name, parent);
-        agt_in_port = new ("agt_in_port", this);        
+        agt_in_port = new ("agt_in_port", this);
         agt_in_to_cov_port = new ("agt_in_to_cov_port", this);
     endfunction
 

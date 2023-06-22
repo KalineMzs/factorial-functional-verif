@@ -1,28 +1,28 @@
 class random_test extends uvm_test;
-  `uvm_component_utils(random_test)
+	`uvm_component_utils(random_test)
 
-  factorial_env env;
-  factorial_random_sequence seq;
+	factorial_env env;
+	factorial_random_sequence seq;
 	factorial_vif vif;
 
 	int clk_counter, MAX_COUNTER;
 
-  function new(string name, uvm_component parent = null);
-    super.new(name, parent);
+	function new(string name, uvm_component parent = null);
+		super.new(name, parent);
 		clk_counter = 0;
 
 		if (!$value$plusargs("c=%0d", MAX_COUNTER)) begin
-			MAX_COUNTER = 2000;
-			`uvm_info("CLOCK", $sformatf("Clock configured: %0d clocks", MAX_COUNTER), UVM_LOW)
+		MAX_COUNTER = 2000;
+		`uvm_info("CLOCK", $sformatf("Clock configured: %0d clocks", MAX_COUNTER), UVM_LOW)
 		end
-  endfunction
+	endfunction
 
-  virtual function void build_phase(uvm_phase phase);
-    super.build_phase(phase);
+	virtual function void build_phase(uvm_phase phase);
+		super.build_phase(phase);
 		assert(uvm_config_db#(factorial_vif)::get(this, "", "vif", vif));
-    env = factorial_env::type_id::create("env", this);
-    seq = factorial_random_sequence::type_id::create("seq", this);	
-  endfunction
+		env = factorial_env::type_id::create("env", this);
+		seq = factorial_random_sequence::type_id::create("seq", this);
+	endfunction
 
 	virtual task main_phase(uvm_phase phase);
 		phase.raise_objection(this);

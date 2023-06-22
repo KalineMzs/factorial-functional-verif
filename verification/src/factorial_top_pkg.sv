@@ -11,7 +11,7 @@ package factorial_top_pkg;
     `include "agents/factorial_in_agent.sv"
     `include "agents/factorial_out_monitor.sv"
     `include "agents/factorial_out_agent.sv"
-    
+
     //Coverage
     `include "env/factorial_coverage.sv"
 

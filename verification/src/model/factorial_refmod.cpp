@@ -1,22 +1,21 @@
 #include <systemc.h>
 #include "tlm.h"
 #include "factorial_cpp.hpp"
+#include "uvmc.h"
 
+using namespace uvmc;
 using namespace std;
-
 using namespace tlm;
 
 class tr {
-public:
-	bool in_valid;
-	sc_uint<3> in_data;
-	bool out_valid;
-	bool out_busy;
-	sc_uint<16> out_data;
+	public:
+		bool in_valid;
+		sc_uint<3> in_data;
+		bool out_valid;
+		bool out_busy;
+		sc_uint<16> out_data;
 };
 
-#include "uvmc.h"
-using namespace uvmc;
 
 template <>
 struct uvmc_converter<tr> {
@@ -55,10 +54,10 @@ SC_MODULE(factorial_refmod) {
         factorial.out_busy(out_busy_sig);
         factorial.out_data(out_data_sig);
 
-        SC_THREAD(p);
+        SC_THREAD(run);
     }
 
-    void p() {
+    void run() {
         tr tr_in, tr_out;
 
         clk_sig = 0;
@@ -73,7 +72,7 @@ SC_MODULE(factorial_refmod) {
 
             tr_out.out_valid = out_valid_sig.read();
             tr_out.out_busy = out_busy_sig.read();
-            tr_out.out_data = static_cast<unsigned int>(out_data_sig.read());
+            tr_out.out_data = out_data_sig.read();
 
             out->put(tr_out);
             clk_sig = 0;
