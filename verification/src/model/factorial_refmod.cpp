@@ -55,10 +55,10 @@ SC_MODULE(factorial_refmod) {
         factorial.out_busy(out_busy_sig);
         factorial.out_data(out_data_sig);
 
-        SC_THREAD(p);
+        SC_THREAD(run);
     }
 
-    void p() {
+    void run() {
         tr tr_in, tr_out;
 
         clk_sig = 0;
