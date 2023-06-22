@@ -1,6 +1,6 @@
 class factorial_refmod extends uvm_component;
     `uvm_component_utils(factorial_refmod)
-    
+
     factorial_seq_item #(IN_DATA_WD, OUT_DATA_WD) in_tr, out_tr;
     uvm_tlm_analysis_fifo #(factorial_seq_item #(IN_DATA_WD, OUT_DATA_WD)) refmod_in_port;
     uvm_analysis_port #(factorial_seq_item #(IN_DATA_WD, OUT_DATA_WD)) refmod_out_port;

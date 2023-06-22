@@ -37,7 +37,7 @@ class factorial_scoreboard extends uvm_scoreboard;
             fork
                 dut_port.get(dut_tr);
                 refmod_port.get(refmod_tr);
-            join			
+            join
 			match_result = comparer.compare_field("Signal: out_data",
 												   dut_tr.out_data, refmod_tr.out_data, OUT_DATA_WD, UVM_DEC);
 			match_result &= comparer.compare_field("Signal: out_valid", dut_tr.out_valid, refmod_tr.out_valid, 1);
@@ -46,4 +46,3 @@ class factorial_scoreboard extends uvm_scoreboard;
         end
     endtask
 endclass
-
