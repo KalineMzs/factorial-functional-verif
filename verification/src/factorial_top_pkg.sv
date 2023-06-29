@@ -16,6 +16,7 @@ package factorial_top_pkg;
     `include "env/factorial_coverage.sv"
 
     `include "env/factorial_refmod.sv"
+    `include "env/factorial_refmod_sv.sv"
     `include "env/factorial_scoreboard.sv"
     `include "env/factorial_env.sv"
 
