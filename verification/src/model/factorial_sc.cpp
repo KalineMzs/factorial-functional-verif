@@ -29,7 +29,7 @@ struct uvmc_converter<tr> {
 };
 // UVMC_UTILS_5(tr, in_valid, in_data, out_valid, out_busy, out_data)
 
-SC_MODULE(factorial_refmod) {
+SC_MODULE(factorial_sc) {
     sc_port<tlm_get_peek_if<tr> > in;
     sc_port<tlm_put_if<tr> > out;
 
@@ -44,7 +44,7 @@ SC_MODULE(factorial_refmod) {
 
 	factorial_cpp factorial;
 
-    SC_CTOR(factorial_refmod): in("in"), out("out"), factorial("factorial") {
+    SC_CTOR(factorial_sc): in("in"), out("out"), factorial("factorial") {
         factorial.clk(clk_sig);
         factorial.resetn(resetn_sig);
         factorial.in_valid(in_valid_sig);

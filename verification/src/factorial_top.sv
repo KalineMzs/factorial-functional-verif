@@ -4,6 +4,7 @@
 `include "agents/factorial_interface.sv"
 `include "factorial_top_pkg.sv"
 
+`timescale 1ps/1ps
 module factorial_top;
     import uvm_pkg::*;
 	import uvmc_pkg::*;
