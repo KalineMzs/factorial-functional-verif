@@ -4,8 +4,8 @@ class factorial_scoreboard extends uvm_scoreboard;
 
     parameter SHOW_MAX = 1000;
 
-    uvm_tlm_fifo #(factorial_seq_item_param) sc_port;
-    uvm_tlm_analysis_fifo #(factorial_seq_item_param) dut_port, rfm_port;
+    uvm_tlm_fifo #(factorial_seq_item_param) sc_fifo;
+    uvm_tlm_analysis_fifo #(factorial_seq_item_param) dut_fifo, rfm_fifo;
 
     factorial_seq_item_param dut_tr, sc_tr, rfm_in_tr, rfm_out_tr;
 
@@ -17,9 +17,9 @@ class factorial_scoreboard extends uvm_scoreboard;
 
     function new(string name = "factorial_scoreboard", uvm_component parent = null);
         super.new(name, parent);
-        dut_port = new("dut_port", this);
-        rfm_port = new("rfm_port", this);
-        sc_port = new("sc_port", this);
+        dut_fifo = new("dut_fifo", this);
+        rfm_fifo = new("rfm_fifo", this);
+        sc_fifo = new("sc_fifo", this);
         comparer = new();
         n_match = 0;
     endfunction
@@ -42,20 +42,20 @@ class factorial_scoreboard extends uvm_scoreboard;
     virtual task main_phase (uvm_phase phase);
         forever begin
             fork
-                dut_port.get(dut_tr);
-                sc_port.get(sc_tr);
+                dut_fifo.get(dut_tr);
+                sc_fifo.get(sc_tr);
                 begin
-                    rfm_port.get(rfm_in_tr);
+                    rfm_fifo.get(rfm_in_tr);
                     rfm_out_tr = rfm.exec_factorial(rfm_in_tr);
                 end
             join
-            match_result = my_comparer(dut_tr, rfm_out_tr, "DUT_X_RFM");
-            match_result &= my_comparer(sc_tr, rfm_out_tr, "SC_X_RFM");
+            match_result = compare_tr(dut_tr, rfm_out_tr, "DUT_X_RFM");
+            match_result &= compare_tr(sc_tr, rfm_out_tr, "SC_X_RFM");
             if (match_result) n_match++;
         end
     endtask
 
-    function bit my_comparer(factorial_seq_item_param tr1, tr2, string pattern = "Signal");
+    function bit compare_tr(factorial_seq_item_param tr1, tr2, string pattern = "Signal");
         bit result;
 
         result = comparer.compare_field($sformatf("%s: out_data", pattern),

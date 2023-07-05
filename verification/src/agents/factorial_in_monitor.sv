@@ -4,11 +4,11 @@ class factorial_in_monitor extends uvm_monitor;
     factorial_seq_item #(IN_DATA_WD, OUT_DATA_WD) in_tr;
     factorial_vif vif;
 
-    uvm_analysis_port #(factorial_seq_item #(IN_DATA_WD, OUT_DATA_WD)) mon_in_port;
+    uvm_analysis_port #(factorial_seq_item #(IN_DATA_WD, OUT_DATA_WD)) in_port;
 
     function new(string name = "factorial_in_monitor", uvm_component parent = null);
         super.new(name, parent);
-        mon_in_port = new ("mon_in_port", this);
+        in_port = new ("in_port", this);
     endfunction
 
     virtual function void build_phase (uvm_phase phase);
@@ -20,10 +20,10 @@ class factorial_in_monitor extends uvm_monitor;
     virtual task main_phase (uvm_phase phase);
         forever begin
             @(posedge vif.clk);
-            wait(vif.resetn === 1'b1);
-			in_tr.in_data = vif.in_data;
+            wait(vif.resetn === 1);
+            in_tr.in_data = vif.in_data;
             in_tr.in_valid = vif.in_valid;
-            mon_in_port.write(in_tr);
+            in_port.write(in_tr);
         end
     endtask
 endclass
