@@ -4,6 +4,9 @@
 This project utilizes the UVM Connect library to integrate a SystemC architectural module into a functional verification environment implemented in SystemVerilog, following the UVM methodology.
 
 The design used was developed by Danilo and is available at: https://github.com/danilo-bc/factorial-and-hdl.
+<div align="center">
+<img src="https://raw.githubusercontent.com/KalineMzs/factorial-functional-verif/main/verification/docs/img/testbench_architecture.png" width="400px;" alt="Foto de Kaline Menezes no GitHub"/>
+</div>
 
 ## :mag_right: In this project, you will find:
 * Testbench code using the UVM methodology; 
