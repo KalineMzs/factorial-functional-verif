@@ -8,7 +8,7 @@ interface factorial_interface
     logic out_valid;
     logic out_busy;
 
-  modport dut (
+  modport duv (
     input clk,
     input resetn,
     input in_data,

@@ -5,9 +5,9 @@ class factorial_scoreboard extends uvm_scoreboard;
     parameter SHOW_MAX = 1000;
 
     uvm_tlm_fifo #(factorial_seq_item_param) sc_fifo;
-    uvm_tlm_analysis_fifo #(factorial_seq_item_param) dut_fifo, rfm_fifo;
+    uvm_tlm_analysis_fifo #(factorial_seq_item_param) duv_fifo, rfm_fifo;
 
-    factorial_seq_item_param dut_tr, sc_tr, rfm_in_tr, rfm_out_tr;
+    factorial_seq_item_param duv_tr, sc_tr, rfm_in_tr, rfm_out_tr;
 
     factorial_refmod rfm;
     uvm_comparer comparer;
@@ -17,7 +17,7 @@ class factorial_scoreboard extends uvm_scoreboard;
 
     function new(string name = "factorial_scoreboard", uvm_component parent = null);
         super.new(name, parent);
-        dut_fifo = new("dut_fifo", this);
+        duv_fifo = new("duv_fifo", this);
         rfm_fifo = new("rfm_fifo", this);
         sc_fifo = new("sc_fifo", this);
         comparer = new();
@@ -28,7 +28,7 @@ class factorial_scoreboard extends uvm_scoreboard;
         super.build_phase(phase);
         comparer.verbosity = UVM_LOW;
         comparer.show_max = SHOW_MAX;
-        dut_tr = factorial_seq_item_param::type_id::create("dut_tr", this);
+        duv_tr = factorial_seq_item_param::type_id::create("duv_tr", this);
         sc_tr = factorial_seq_item_param::type_id::create("sc_tr", this);
         rfm = factorial_refmod::type_id::create("rfm", this);
         rfm_in_tr = factorial_seq_item_param::type_id::create("rfm_in_tr", this);
@@ -42,14 +42,14 @@ class factorial_scoreboard extends uvm_scoreboard;
     virtual task main_phase (uvm_phase phase);
         forever begin
             fork
-                dut_fifo.get(dut_tr);
+                duv_fifo.get(duv_tr);
                 sc_fifo.get(sc_tr);
                 begin
                     rfm_fifo.get(rfm_in_tr);
                     rfm_out_tr = rfm.exec_factorial(rfm_in_tr);
                 end
             join
-            match_result = compare_tr(dut_tr, rfm_out_tr, "DUT_X_RFM");
+            match_result = compare_tr(duv_tr, rfm_out_tr, "DUV_X_RFM");
             match_result &= compare_tr(sc_tr, rfm_out_tr, "SC_X_RFM");
             if (match_result) n_match++;
         end
