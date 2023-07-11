@@ -28,14 +28,14 @@ module factorial_top;
         .resetn(resetn)
     );
 
-    FactorialBlk #(IN_DATA_WD, OUT_DATA_WD) dut (
+    FactorialBlk #(IN_DATA_WD, OUT_DATA_WD) duv (
         .clk(clk),
         .resetn(resetn),
-        .in_data(factorial_if.dut.in_data),
-        .in_valid(factorial_if.dut.in_valid),
-        .out_data(factorial_if.dut.out_data),
-        .out_valid(factorial_if.dut.out_valid),
-        .out_busy(factorial_if.dut.out_busy)
+        .in_data(factorial_if.duv.in_data),
+        .in_valid(factorial_if.duv.in_valid),
+        .out_data(factorial_if.duv.out_data),
+        .out_valid(factorial_if.duv.out_valid),
+        .out_busy(factorial_if.duv.out_busy)
     );
     initial begin
         uvm_config_db#(virtual factorial_interface#(IN_DATA_WD, OUT_DATA_WD))::set(uvm_root::get(), "*", "vif", factorial_if);
