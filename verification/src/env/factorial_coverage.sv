@@ -2,7 +2,7 @@ class factorial_coverage extends uvm_component;
     `uvm_component_utils (factorial_coverage)
 	typedef factorial_seq_item #(IN_DATA_WD, OUT_DATA_WD) factorial_seq_item_param;
 
-    uvm_analysis_imp #(factorial_seq_item_param, factorial_coverage) cov_port;
+    uvm_analysis_imp #(factorial_seq_item_param, factorial_coverage) cov_imp;
 
     factorial_seq_item_param in_tr;
 
@@ -26,7 +26,7 @@ class factorial_coverage extends uvm_component;
 
     function new(string name = "factorial_coverage", uvm_component parent = null);
         super.new(name, parent);
-        cov_port = new("cov_port", this);
+        cov_imp = new("cov_imp", this);
         cg = new();
     endfunction
 

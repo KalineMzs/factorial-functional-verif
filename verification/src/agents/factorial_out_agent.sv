@@ -3,11 +3,11 @@ class factorial_out_agent extends uvm_agent;
 
     factorial_out_monitor out_mon;
 
-    uvm_analysis_port #(factorial_seq_item #(IN_DATA_WD, OUT_DATA_WD)) agt_out_port;
+    uvm_analysis_port #(factorial_seq_item #(IN_DATA_WD, OUT_DATA_WD)) out_port;
 
     function new(string name = "factorial_out_agent", uvm_component parent = null);
         super.new(name, parent);
-        agt_out_port = new ("agt_out_port", this);
+        out_port = new ("out_port", this);
     endfunction
 
     virtual function void build_phase (uvm_phase phase);
@@ -17,6 +17,6 @@ class factorial_out_agent extends uvm_agent;
 
     virtual function void connect_phase(uvm_phase phase);
         super.connect_phase(phase);
-        out_mon.mon_out_port.connect(agt_out_port);
+        out_mon.out_port.connect(out_port);
     endfunction
 endclass
